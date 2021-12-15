@@ -27,47 +27,6 @@ public class IntroTest {
   }
 
   @Test
-  public void toUniResolving() throws InterruptedException {
-    LocalTime startTime = now();
-    Multi.createBy().repeating()
-        .uni(() -> {
-          System.out.println("create upstream uni");
-          return intro.toUniDelayed("upstream delayed", ofMillis(100));
-        })
-        .until(item -> {
-          System.out.println(now().minusSeconds(20).isAfter(startTime));
-          return now().minusSeconds(20).isAfter(startTime);
-        })
-        .onItem().transformToUniAndMerge(item -> {
-          System.out.println("create downstream uni");
-          return intro.toUniDelayed("downstream delayed", ofMillis(10000));
-        }).subscribe().with(System.out::println);
-
-    System.out.println(now());
-    intro.toUniDelayed("banana", ofMillis(5000))
-        .subscribe().with(x -> System.out.println(x));
-    System.out.println(now());
-
-    intro.toUniDelayed("banana", ofMillis(5000))
-        .subscribe().with(x -> System.out.println(x));
-
-    intro.toUniDelayed("banana", ofMillis(5000))
-        .subscribe().with(x -> System.out.println(x));
-
-/*
-    intro.toUniSleep("banana")
-        .subscribe().with(x -> System.out.println(x));
-*/
-
-    int i = 0;
-    while (i < 30) {
-      i++;
-      System.out.println("main th");
-      Thread.sleep(200);
-    }
-  }
-
-  @Test
   public void testBackpressure() throws InterruptedException {
     LocalTime startTime = now();
     Multi.createBy().repeating()
