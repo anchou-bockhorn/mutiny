@@ -16,7 +16,7 @@ import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
 public class IntroTest {
-//  todo: showcase backpressure
+
   @Inject
   Intro intro;
 
@@ -40,7 +40,7 @@ public class IntroTest {
         })
         .onItem().transformToUniAndMerge(item -> {
           System.out.println("create downstream uni");
-          return intro.toUniDelayed("delayed", ofMillis(10000));
+          return intro.toUniDelayed("delayed", ofMillis(5000));
         }).collect().asList()
         .await().indefinitely();
   }
