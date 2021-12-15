@@ -29,15 +29,4 @@ public class Intro {
     return Multi.createFrom().ticks().every(ofMillis(500))
         .map(nothing -> String.valueOf(i.incrementAndGet()));
   }
-
-  public <T> Uni<T>  toUniSleep(T item) {
-/*
-    try {
-      Thread.sleep(10000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-*/
-    return Uni.createFrom().item(item);
-  }
 }
