@@ -6,9 +6,7 @@ import static java.time.LocalTime.now;
 import io.quarkus.test.junit.QuarkusTest;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
-import java.time.Duration;
 import java.util.List;
-import javax.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
