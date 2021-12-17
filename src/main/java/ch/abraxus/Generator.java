@@ -30,10 +30,4 @@ public class Generator {
             item -> Uni.createFrom().item(item).onItem().delayIt().by(delay)
         );
   }
-
-  public Multi<String> count() {
-    AtomicInteger i = new AtomicInteger();
-    return Multi.createFrom().ticks().every(ofMillis(500))
-        .map(nothing -> String.valueOf(i.incrementAndGet()));
-  }
 }
