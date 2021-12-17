@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @ApplicationScoped
-public class Intro {
+public class Generator {
 
   public <T> Uni<T> toUni(T item) {
     return Uni.createFrom().item(item);
@@ -22,6 +22,13 @@ public class Intro {
   public <T> Uni<T> toUniDelayed(T item, Duration delay) {
     return Uni.createFrom().item(item)
         .onItem().delayIt().by(delay);
+  }
+
+  public <T> Multi<T> toMultiDelayed(Duration delay, T... items) {
+    return Multi.createFrom().items(items)
+        .onItem().transformToUniAndConcatenate(
+            item -> Uni.createFrom().item(item).onItem().delayIt().by(delay)
+        );
   }
 
   public Multi<String> count() {
