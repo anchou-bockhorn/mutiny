@@ -44,6 +44,7 @@ class DMergingTest {
     System.out.println(collectedEvents); // do not expect that merging makes sure, both streams are consumed in
     // alternating order. Merging doesn't care at all about order, it only cares about efficiency. That is the reason,
     // that when merging streams, it might result in the same stream as with concatenation.
+    // To achieve an alternating order, I think Multi.createBy().combining() might be the solution
   }
 
   @Test
