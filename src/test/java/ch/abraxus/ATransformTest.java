@@ -1,4 +1,4 @@
-package ch.abraxus.transformation;
+package ch.abraxus;
 
 import static java.time.Duration.ofSeconds;
 import static java.time.LocalTime.now;
