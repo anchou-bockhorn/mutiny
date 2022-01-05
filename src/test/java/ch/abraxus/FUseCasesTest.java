@@ -23,7 +23,7 @@ class FUseCasesTest {
     streamA.subscribe().with(x -> System.out.println(x));
 
     Multi<String> latest = Multi.createBy().combining()
-        .streams(streamA.map(x -> ), streamB)
+        .streams(streamA.map(x -> x), streamB)
         .latestItems()
         .asTuple()
         .map(Tuple2::getItem1);
