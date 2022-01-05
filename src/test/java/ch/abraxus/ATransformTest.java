@@ -29,7 +29,7 @@ class ATransformTest {
 
     System.out.println(now());
     List<String> collection = stringMulti.collect().asList().await().indefinitely();
-    // what happens if subscribe is used? What would be the Reactive Method signature?
+  // what happens if subscribe is used? What would be the Reactive Test Method signature?
     System.out.println(now());
 
     System.out.println(collection);
