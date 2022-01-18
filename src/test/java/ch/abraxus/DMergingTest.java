@@ -61,4 +61,52 @@ class DMergingTest {
 
     System.out.println(collectedEvents); // expect a list of Stream A items concatenated with a list of Stream B items
   }
+
+  @Test
+  public void concatenateMultiOnMulti() {
+    Multi<String> streamA = generator
+        .toMultiDelayed(ofMillis(1000), "Stream A", "Stream A", "Stream A", "Stream A", "Stream A", "Stream A");
+    Multi<String> streamB = generator
+        .toMultiDelayed(ofMillis(1000),
+            "Stream B1",
+            "Stream B2",
+            "Stream B3",
+            "Stream B4",
+            "Stream B5",
+            "Stream B6");
+
+    Multi<String> streams = streamA.onItem().transformToMultiAndConcatenate(e -> {
+      System.out.println("process stream a element: " + e);
+      return streamB.invoke(f -> System.out.println("Stream B invoke" + f));
+    });
+
+    List<String> collectedEvents = streams.collect().asList()
+        .await().indefinitely();
+
+    System.out.println(collectedEvents); // expect a list of Stream A items concatenated with a list of Stream B items
+  }
+
+  @Test
+  public void mergeMultiOnMulti() {
+    Multi<String> streamA = generator
+        .toMultiDelayed(ofMillis(1000), "Stream A", "Stream A", "Stream A", "Stream A", "Stream A", "Stream A");
+    Multi<String> streamB = generator
+        .toMultiDelayed(ofMillis(1000),
+            "Stream B1",
+            "Stream B2",
+            "Stream B3",
+            "Stream B4",
+            "Stream B5",
+            "Stream B6");
+
+    Multi<String> streams = streamA.onItem().transformToMultiAndMerge(e -> {
+      System.out.println("process stream a element: " + e);
+      return streamB.invoke(f -> System.out.println("Stream B invoke" + f));
+    });
+
+    List<String> collectedEvents = streams.collect().asList()
+        .await().indefinitely();
+
+    System.out.println(collectedEvents); // expect a list of Stream A items concatenated with a list of Stream B items
+  }
 }
